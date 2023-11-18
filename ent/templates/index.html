@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'vendor/select2.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'ent/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    {% csrf_token %}
+    <div id="blocks-wrapper">
+        <div>Blocks</div>
+        <div id="block-list"></div>
+    </div>
+
+    <div id="tags-wrapper"></div>
+    <script src="{% static 'vendor/require.js' %}"></script>
+
+    <script>
+        require.config({
+            baseUrl: "{{ stat_url }}",
+            paths: {
+                'jquery': 'vendor/jquery',
+                'underscore': 'vendor/underscore'
+            }
+        });
+    </script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script type="text/template" id="blocks-tmpl">
+        <% _.each(blocks, function (block) { %>
+            <p>
+                <button id="block-<%= block.id %>" class="block" href="/ent/block/<%= block.id %>">
+                    <%= block.name %>
+                </button>
+            </p>
+        <% }); %>
+    </script>
+
+    <script type="text/template" id="block-tags-tmpl">
+        <div>Block <%= blockId %> tags:</div>
+        <div>
+            <select class="block-tags-select" name="state"></select>
+            <% if (errors.tagCreation) { %>
+                <div class="error-msg"><%= errors.tagCreation %></div>
+            <% } %>
+        </div>
+        <div>
+            <button id="save-block-tag-settings">Save</button>
+        </div>
+    </script>
+</body>
+</html>

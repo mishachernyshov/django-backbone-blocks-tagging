@@ -1,0 +1,11 @@
+.error-msg {
+    color: #ac1212;
+}
+
+.block-tags-select {
+    width: 500px;
+}
+
+#blocks-wrapper {
+    border: 1px solid black;
+}
